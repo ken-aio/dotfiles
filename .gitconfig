@@ -1,0 +1,44 @@
+[core]
+  editor = /usr/bin/vim
+  compression = -1
+[user]
+  email = suguru.akiho@gmail.com
+  name = Suguru Akiho
+[color]
+  ui = auto
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  grep = auto
+[alias]
+  alias = !git config --get-regexp '^alias\\.' | sed 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/' | sort
+  refresh= !git fetch origin && git remote prune origin
+  s = status
+  ss = status -sb
+# show status after add (a)
+  a  = !git add .  && git status
+  ad = !git add .  && git status
+  br = branch -a -v
+  brd = "!git branch -d $(git branch --merged | grep -v master | grep -v '*')" # masterマージズミのブランチを削除する
+  ci = commit -a -m
+  cie = commit --allow-empty -m
+  co = checkout
+  d = diff
+  dc = diff --cached
+  l = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(green)- %an, %cr%Creset'
+  lp = log -p
+  # gr = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
+  gr = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --date=relative
+  tree = log --graph --pretty=oneline --decorate --date=short --abbrev-commit --branches
+  rv = remote -v
+  drag = pull --rebase
+# rebase
+  rbc = rebase --continue
+  rba = rebase --abort
+[push]
+  default = simple
+[pull]
+  default = current
+[merge]
+  ff = false

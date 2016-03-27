@@ -1,0 +1,42 @@
+eval "$(rbenv init -)"
+
+# MacPorts Installer addition on 2013-08-21_at_23:34:01: adding an appropriate PATH variable for use with MacPorts.
+export PATH=/usr/local/bin:/opt/local/bin:/opt/local/sbin:$PATH
+# Finished adapting your PATH environment variable for use with MacPorts.
+export PATH=$HOME/tools/platform-tools:$HOME/tools/android-sdk-macosx/tools:$HOME/.nodebrew/current/bin:$PATH
+
+alias su='sudo bash --rcfile /var/root/.bashrc'
+alias ll='ls -l'
+alias lla='ls -la'
+alias l='ls -a'
+alias be='bundle exec'
+#pushd, popd
+#alias cd='pushd'
+#alias p='popd'
+#alias flush="dirs -c"
+
+# add color for ls
+export CLICOLORS=1
+export LSCOLORS=Bxcxcxdxbxegedabagacad
+alias ls='ls -G'
+
+# add color for grep
+export eREP_OPTIONS='--color=auto'
+
+# JAVA
+export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+export MAVEN_HOME=/Users/akiho/maven/bin
+
+# terminal settings
+source ~/.git-completion.bash
+source ~/.git-prompt.sh
+GIT_PS1_SHOWDIRTYSTATE=true
+export PS1="\[\033[32m\]\u@\[\033[32m\]\h \[\033[34m\]\W\[\033[31m\]$(__git_ps1) \[\033[00m\]\$ "
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+export PGDATA=/usr/local/var/postgres/
+
+#ANDROID
+ANDROID_HOME=/Users/akiho/tools/android-sdk-macosx

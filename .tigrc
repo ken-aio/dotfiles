@@ -1,0 +1,3 @@
+# 画面分割するサイズ
+set split-view-height = 50%
+set split-view-width = 50%
