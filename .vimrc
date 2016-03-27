@@ -31,12 +31,18 @@ NeoBundle 'tpope/vim-endwise'
 
 " unite
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/unite-outline'
+NeoBundle 'Shougo/neomru.vim'
 
 " rails
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'basyura/unite-rails'
 
+" Tree view
+NeoBundle 'scrooloose/nerdtree'
 
+" Golang
+NeoBundle 'vim-jp/vim-go-extra'
 
 call neobundle#end()
 
@@ -125,6 +131,11 @@ set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V
 
 "前のコマンドと同じコマンドを実行する操作を[c.]に変更
 nnoremap c. q:k<Cr>
+
+" Leaderを,に割り当て
+let mapleader = "@"
+" ,のデフォルトの機能は、\で使えるように退避
+noremap \  @
 
 filetype on
 filetype indent on
@@ -249,3 +260,54 @@ au FileType unite nmap <silent> <buffer> <ESC> <Plug>(unite_exit)
 
 " Uniteに入る際はpasteモードをOFFにする
 au FileType unite set nopaste
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+""" NERDTree
+""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <silent><C-e> :NERDTreeToggle<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+""" Unite outline
+""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:unite_split_rule = 'botright'
+nnoremap <C-u> :Unite -vertical -no-quit -winwidth=40 outline<Esc>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+""" vim-go
+""""""""""""""""""""""""""""""""""""""""""""""""""
+NeoBundleLazy 'fatih/vim-go', {
+       \ 'autoload' : {
+       \   'filetypes' : 'go',
+       \   'commands' : ['GoInstallBinaries', 'GoUpdateBinaries'],
+       \ }}
+
+" vim-go "{{{
+let bundle = neobundle#get('vim-go')
+function! bundle.hooks.on_source(bundle)
+       let g:go_fmt_autosave = 0
+       let g:go_fmt_fail_silently = 1
+endfunction
+"}}}
+" settings
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_interfaces = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+au FileType go nmap <Leader>r <Plug>(go-run)
+au FileType go nmap <Leader>b <Plug>(go-build)
+au FileType go nmap <Leader>t <Plug>(go-test)
+au FileType go nmap <Leader>c <Plug>(go-coverage)
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+au FileType go nmap <Leader>s <Plug>(go-implements)
+au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <Leader>e <Plug>(go-rename)
+" syntax highlight
+autocmd FileType go :highlight goErr cterm=bold ctermfg=214
+autocmd FileType go :match goErr /\<err\>/

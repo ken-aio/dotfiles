@@ -38,5 +38,7 @@ export PS1="\[\033[32m\]\u@\[\033[32m\]\h \[\033[34m\]\W\[\033[31m\]$(__git_ps1)
 export PATH="/usr/local/heroku/bin:$PATH"
 export PGDATA=/usr/local/var/postgres/
 
-#ANDROID
-ANDROID_HOME=/Users/akiho/tools/android-sdk-macosx
+# Golang
+export GOROOT=/usr/local/opt/go/libexec
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
