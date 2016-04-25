@@ -13,7 +13,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " コード補完
 NeoBundle 'Shougo/neocomplete.vim'
-NeoBundle 'marcus/rsense'
+"NeoBundle 'marcus/rsense'
+NeoBundle 'NigoroJr/rsense'
 NeoBundle 'supermomonga/neocomplete-rsense.vim'
 
 " 静的解析
@@ -44,7 +45,21 @@ NeoBundle 'scrooloose/nerdtree'
 " Golang
 NeoBundle 'vim-jp/vim-go-extra'
 
+" helpの日本語化
+NeoBundle 'vim-jp/vimdoc-ja'
+
+" ファイルのサーチ
+NeoBundle "ctrlpvim/ctrlp.vim"
+
 call neobundle#end()
+
+" プラグインがインストールされているかチェック
+NeoBundleCheck
+
+if !has('vim_starting')
+  " .vimrcを読み込み直したときのための設定
+  call neobundle#call_hook('on_source')
+endif
 
 "-----------------------------------------
 " 基本設定
@@ -94,7 +109,6 @@ set smartindent
 set hidden
 
 "カレントバッファ内のファイルの文字エンコーディングを設定する
-"set fileencoding=utf-8
 set fileencodings=utf-8,sjis,euc-jp,latin1
 
 "Insertモードで<Tab> を挿入するのに、適切な数の空白を使う
@@ -125,6 +139,12 @@ set scrolloff=5
 "ステータスラインを表示するウィンドウを設定する
 "2:常にステータスラインを表示する
 set laststatus=2
+
+" undoを保存する
+set undofile
+
+" 最低でも上下に表示する行数
+set scrolloff=5
 
 "ステータス行の表示内容を設定する
 set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
@@ -168,6 +188,11 @@ endf
 au BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
 " インデントを設定
 autocmd FileType coffee     setlocal sw=2 sts=2 ts=2 et
+
+" -------------------------------
+" vimdoc-jp help
+" -------------------------------
+set helplang=ja,en
 
 " -------------------------------
 " Rsense
@@ -311,3 +336,25 @@ au FileType go nmap <Leader>e <Plug>(go-rename)
 " syntax highlight
 autocmd FileType go :highlight goErr cterm=bold ctermfg=214
 autocmd FileType go :match goErr /\<err\>/
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+""" CtrlP Prefix: z
+""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap z <Nop>
+nnoremap za :<C-u>CtrlP<Space>
+nnoremap zb :<C-u>CtrlPBuffer<CR>
+nnoremap zd :<C-u>CtrlPDir<CR>
+nnoremap zf :<C-u>CtrlP<CR>
+nnoremap zl :<C-u>CtrlPLine<CR>
+nnoremap zm :<C-u>CtrlPMRUFiles<CR>
+nnoremap zq :<C-u>CtrlPQuickfix<CR>
+nnoremap zs :<C-u>CtrlPMixed<CR>
+nnoremap zt :<C-u>CtrlPTag<CR>
+
+let g:ctrlp_map = '<Nop>'
+" Guess vcs root dir
+let g:ctrlp_working_path_mode = 'ra'
+" Open new file in current window
+let g:ctrlp_open_new_file = 'r'
+let g:ctrlp_extensions = ['tag', 'quickfix', 'dir', 'line', 'mixed']
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:18'
