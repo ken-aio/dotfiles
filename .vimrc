@@ -51,6 +51,9 @@ NeoBundle 'vim-jp/vimdoc-ja'
 " ファイルのサーチ
 NeoBundle "ctrlpvim/ctrlp.vim"
 
+" vimでgitの差分見る
+NeoBundle "airblade/vim-gitgutter"
+
 call neobundle#end()
 
 " プラグインがインストールされているかチェック
@@ -358,3 +361,9 @@ let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_open_new_file = 'r'
 let g:ctrlp_extensions = ['tag', 'quickfix', 'dir', 'line', 'mixed']
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:18'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+""" gitgutter Prefix: ,
+""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <silent> ,gg :<C-u>GitGutterToggle<CR>
+nnoremap <silent> ,gh :<C-u>GitGutterLineHighlightsToggle<CR>
