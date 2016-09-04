@@ -155,6 +155,12 @@ set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V
 "前のコマンドと同じコマンドを実行する操作を[c.]に変更
 nnoremap c. q:k<Cr>
 
+" 閉じカッコの補完 http://qiita.com/shingargle/items/dd1b5510a0685837504a
+inoremap { {}<Left>
+inoremap {<Enter> {}<Left><CR><ESC><S-o>
+inoremap ( ()<ESC>i
+inoremap (<Enter> ()<Left><CR><ESC><S-o>
+
 " Leaderを,に割り当て
 let mapleader = "@"
 " ,のデフォルトの機能は、\で使えるように退避
