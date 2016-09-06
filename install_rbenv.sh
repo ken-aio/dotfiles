@@ -17,6 +17,6 @@ mkdir ${PLUGIN_DIR}
 git clone https://github.com/sstephenson/ruby-build.git ${PLUGIN_DIR}/ruby-build
 sh ${PLUGIN_DIR}/ruby-build/install.sh
 
-yum -y install gcc zlib-devel openssl-devel sqlite sqlite-devel mysql-devel readline-devel libffi-devel libxml2-devel libxslt-devel
+yum -y install gcc zlib-devel openssl-devel sqlite sqlite-devel mysql-devel readline-devel libffi-devel libxml2-devel libxslt-devel bzip2 make
 
 source /etc/profile.d/rbenv.sh
