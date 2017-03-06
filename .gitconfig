@@ -1,6 +1,8 @@
 [core]
   editor = /usr/bin/vim
   compression = -1
+  autocrlf = false
+  excludesfile = $HOME/.gitignore
 [user]
   email = suguru.akiho@gmail.com
   name = Suguru Akiho
@@ -20,7 +22,8 @@
   a  = !git add .  && git status
   ad = !git add .  && git status
   br = branch -a -v
-  brd = "!git branch -d $(git branch --merged | grep -v master | grep -v '*')" # masterマージズミのブランチを削除する
+  brc = "!git branch -r --merged staging | grep -v -e staging -e develop -e alter* -e config -e master* | sed -e 's% *origin/%%' | xargs -I echo" # マージズミのブランチを確認
+  brd = "!git branch -r --merged staging | grep -v -e staging -e develop -e alter* -e config -e master* | sed -e 's% *origin/%%' | xargs -I% git push --delete origin %" # マージズミのブランチを削除する
   ci = commit -a -m
   cie = commit --allow-empty -m
   co = checkout
