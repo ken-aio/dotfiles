@@ -1,0 +1,81 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]] # カーソル位置のコンテキストに合わせてftを切り替える
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+
+[[plugins]] # カーソル位置のコンテキストのftを判定するライブラリ
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]] # toml syntax
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+# コード補完
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+
+# rubocop
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+on_ft = 'rb'
+
+# 静的解析
+[[plugins]]
+repo = 'scrooloose/syntastic'
+
+# ドキュメント参照
+[[plugins]]
+repo = 'thinca/vim-ref'
+
+[[plugins]]
+repo = 'yuku-t/vim-ref-ri'
+
+# 自動で閉じる
+[[plugins]]
+repo = 'tpope/vim-endwise'
+
+[[plugins]]
+repo = 'Townk/vim-autoclose'
+
+# unite
+[[plugins]]
+repo = 'Shougo/unite.vim'
+
+[[plugins]]
+repo = 'Shougo/unite-outline'
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+
+# rails
+[[plugins]]
+repo = 'tpope/vim-rails'
+on_ft = 'rb'
+
+[[plugins]]
+repo = 'basyura/unite-rails'
+
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+
+[[plugins]]
+repo = 'ctrlpvim/ctrlp.vim'
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+
+# ruby
+[[plugins]]
+repo = 'osyo-manga/vim-monster'
+on_ft = 'rb'
+
+[[plugins]]
+repo = 'Townk/vim-autoclose'
+
+[[plugins]]
+repo = 'astashov/vim-ruby-debugger'
+
+[[plugins]]
+repo = 'fishbullet/deoplete-ruby'

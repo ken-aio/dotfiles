@@ -1,7 +1,3 @@
-# utf-8環境
-setw -g utf8 on
-set -g status-utf8 on
-
 #全てのベルを無視
 set-option -g bell-action none
 # ウィンドウ番号基準値
@@ -96,3 +92,20 @@ set -g status-right '#[fg=magenta,bg=black,bold] [%Y-%m-%d(%a) %H:%M]#[default]'
 
 # rbenv localを使えるようにする
 set-environment -gu RBENV_VERSION
+
+# Mac OS X pasteboardを使用できるようにする
+set-option -g default-command "reattach-to-user-namespace -l bash"
+
+# コピーモードでvimキーバインドを使う
+setw -g mode-keys vi
+
+# 'v' で選択を始める
+bind-key -t vi-copy v begin-selection
+bind-key -t vi-copy y copy-pipe "reattach-to-user-namespace pbcopy"
+
+# `Enter` でもcopy-pipeを使う
+unbind -t vi-copy Enter
+bind-key -t vi-copy Enter copy-pipe "reattach-to-user-namespace pbcopy"
+
+# ']' でpbpasteを使う
+bind ] run "reattach-to-user-namespace pbpaste | tmux load-buffer - && tmux paste-buffer"
