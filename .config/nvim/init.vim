@@ -319,3 +319,23 @@ let g:monster#completion#rcodetools#backend = "async_rct_complete"
 let g:deoplete#sources#omni#input_patterns = {
 \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
 \}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+""" QFixHowm
+""""""""""""""""""""""""""""""""""""""""""""""""""
+set runtimepath+=~/.cache/dein/repos/github.com/fuenor/qfixhowm
+
+" キーマップリーダー
+let QFixHowm_MenuKey = 0
+let QFixHowm_Key = 'g'
+
+" howm_dirはファイルを保存したいディレクトリを設定
+let howm_dir             = '~/howm'
+let howm_filename        = '%Y/%m/%Y-%m-%d-%H%M%S.txt'
+let howm_fileencoding    = 'utf-8'
+
+let howm_fileformat      = 'unix'
+" キーコードやマッピングされたキー列が完了するのを待つ時間(ミリ秒)
+set timeout timeoutlen=3000 ttimeoutlen=100
+" プレビューや絞り込みをQuickFix/ロケーションリストの両方で有効化(デフォルト:2)
+let QFixWin_EnableMode = 1

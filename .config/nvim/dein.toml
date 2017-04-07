@@ -79,3 +79,7 @@ repo = 'astashov/vim-ruby-debugger'
 
 [[plugins]]
 repo = 'fishbullet/deoplete-ruby'
+
+# memo tool
+[[plugins]]
+repo = 'fuenor/qfixhowm'
