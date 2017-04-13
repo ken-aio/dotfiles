@@ -12,9 +12,10 @@ repo = 'Shougo/context_filetype.vim'
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
 
-# コード補完
+# for vim
+# http://qiita.com/tekkoc/items/98adcadfa4bdc8b5a6ca
 [[plugins]]
-repo = 'Shougo/deoplete.nvim'
+repo = 'kana/vim-submode'
 
 # rubocop
 [[plugins]]
@@ -83,3 +84,39 @@ repo = 'fishbullet/deoplete-ruby'
 # memo tool
 [[plugins]]
 repo = 'fuenor/qfixhowm'
+
+# view setting
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+depends = ['tagbar', 'vim-fugitive']
+hook_add = '''
+source ~/.config/nvim/plugins/airline.rc.vim
+'''
+
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes'
+depends = 'vim-airline'
+hook_add = '''
+let g:airline_theme='luna'
+'''
+
+
+[[plugins]]
+repo = 'kassio/neoterm'
+if = "has('nvim')"
+hook_add = '''
+'''
+
+# ==========================================================
+# terminal
+# ==========================================================
+[[plugins]]
+repo = 'kassio/neoterm'
+if = "has('nvim')"
+hook_add = '''
+nnoremap <silent> ,rc :TREPLSendFile<cr>
+nnoremap <silent> ,rl :TREPLSendLine<cr>
+vnoremap <silent> ,rl :TREPLSendSelection<cr>
+nnoremap <silent> vt :Ttoggle<cr>
+nnoremap <silent> vs :terminal<cr>
+'''
