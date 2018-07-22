@@ -23,8 +23,8 @@ let s:toml_lazy_file = fnamemodify(expand('<sfile>'), ':h').'/dein_lazy.toml'
 
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
-  call dein#load_toml(s:toml_file)
-  call dein#load_toml(s:toml_lazy_file)
+  call dein#load_toml(s:toml_file,      {'lazy': 0})
+  call dein#load_toml(s:toml_lazy_file, {'lazy': 1})
   call dein#end()
   call dein#save_state()
 endif
@@ -137,6 +137,12 @@ nnoremap c. q:k<Cr>
 "カーソルラインを引く
 set cursorline
 
+"自動保存
+set autowrite
+
+"clipboard共有
+set clipboard+=unnamedplus
+
 " Leaderを,に割り当て
 let mapleader = "@"
 " ,のデフォルトの機能は、\で使えるように退避
@@ -197,6 +203,27 @@ nnoremap sq :<C-u>q<CR>
 nnoremap sQ :<C-u>bd<CR>
 nnoremap sb :<C-u>Unite buffer_tab -buffer-name=file<CR>
 nnoremap sB :<C-u>Unite buffer -buffer-name=file<CR>
+" 分割しないでuniteのbufferを表示する
+nnoremap sbb :<C-u>Unite -no-split<CR>
+" 全部乗せ
+nnoremap saa :<C-u>UniteWithCurrentDir -no-split -buffer-name=files buffer file_mru bookmark file<CR>
+" ファイル一覧
+nnoremap sff  :<C-u>Unite -no-split -buffer-name=files file<CR>
+" 常用セット
+nnoremap suu  :<C-u>Unite -no-split buffer file_mru<CR>
+" 最近使用したファイル一覧
+nnoremap sm  :<C-u>Unite -no-split file_mru<CR>
+" 現在のバッファのカレントディレクトリからファイル一覧
+nnoremap sfa  :<C-u>UniteWithBufferDir -no-split file<CR>
+
+
+"-----------------------------------------
+" PHP settings
+"-----------------------------------------
+let g:php_baselib       = 1
+let g:php_htmlInStrings = 1
+let g:php_noShortTags   = 1
+let g:php_sql_query     = 1
 
 call submode#enter_with('bufmove', 'n', '', 's>', '<C-w>>')
 call submode#enter_with('bufmove', 'n', '', 's<', '<C-w><')
@@ -238,29 +265,13 @@ let g:neocomplete#auto_completion_start_length = 1
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """ rails.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""
-autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.rb -default=controller()
+"autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.rb -default=controller()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """ unite.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " 入力モードで開始する
 let g:unite_enable_start_insert = 1
-
-" 分割しないでuniteのbufferを表示する
-nnoremap <Leader>u  :<C-u>Unite -no-split<Space>
-
-" 全部乗せ
-nnoremap <silent> <Leader>a  :<C-u>UniteWithCurrentDir -no-split -buffer-name=files buffer file_mru bookmark file<CR>
-" ファイル一覧
-nnoremap <silent> <Leader>f  :<C-u>Unite -no-split -buffer-name=files file<CR>
-" バッファ一覧
-nnoremap <silent> <Leader>j  :<C-u>Unite -no-split buffer<CR>
-" 常用セット
-nnoremap <silent> <Leader>u  :<C-u>Unite -no-split buffer file_mru<CR>
-" 最近使用したファイル一覧
-nnoremap <silent> <Leader>m  :<C-u>Unite -no-split file_mru<CR>
-" 現在のバッファのカレントディレクトリからファイル一覧
-nnoremap <silent> <Leader>d  :<C-u>UniteWithBufferDir -no-split file<CR>
 
 " Ctrl + JはESCとする
 au FileType unite inoremap <silent> <buffer> <C-j> <ESC>
@@ -292,6 +303,43 @@ let g:go_highlight_structs = 1
 let g:go_highlight_interfaces = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+let g:go_highlight_types = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_generate_tags = 1
+let g:go_highlight_fields = 1
+" GoMetaLinter
+let g:go_metalinter_autosave = 1
+
+let g:go_fmt_command = "goimports"
+" Error and warning signs.
+let g:ale_sign_error = '⤫'
+let g:ale_sign_warning = '⚠'
+" Enable integration with airline.
+let g:airline#extensions#ale#enabled = 1
+
+" Vim-Go shortcut settings
+"autocmd FileType go nmap gb :GoBuild<CR>
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+autocmd FileType go nmap gb  :<C-u>call <SID>build_go_files()<CR>
+autocmd FileType go nmap gbb :GoTestFunc<CR>
+autocmd FileType go nmap gl  :GoLint<CR>
+autocmd FileType go nmap gr  :GoReferrers<CR>
+autocmd FileType go nmap gf  :GoIferr<CR>
+autocmd FileType go nmap gh  :GoSameIds<CR>
+autocmd FileType go nmap gi  :GoInfo<CR>
+autocmd FileType go nmap gd  :GoDoc<CR>
+autocmd FileType go nmap gc  :GoCoverageToggle<CR>
+autocmd FileType go nmap ga  :GoAlternate<CR>
+autocmd FileType go nmap gn  :GoRename<CR>
 au FileType go nmap <Leader>r <Plug>(go-run)
 au FileType go nmap <Leader>b <Plug>(go-build)
 au FileType go nmap <Leader>t <Plug>(go-test)

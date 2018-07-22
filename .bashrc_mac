@@ -1,7 +1,14 @@
 eval "$(rbenv init -)"
 
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+export CMS_PATH=~/git/work/CMS
+
+export XDG_CONFIG_HOME=~/.config
+
 # MacPorts Installer addition on 2013-08-21_at_23:34:01: adding an appropriate PATH variable for use with MacPorts.
-export PATH=/usr/local/bin:/opt/local/bin:/opt/local/sbin:$PATH
+export PATH=/usr/local/bin:/opt/local/bin:/opt/local/sbin:/usr/local/opt/mysql\@5.6/bin:$PATH
 # Finished adapting your PATH environment variable for use with MacPorts.
 export PATH=$HOME/tools/platform-tools:$HOME/tools/android-sdk-macosx/tools:$HOME/.nodebrew/current/bin:$PATH
 
@@ -10,6 +17,8 @@ alias ll='ls -l'
 alias lla='ls -la'
 alias l='ls -a'
 alias be='bundle exec'
+alias vim='nvim'
+alias tailf='tail -f'
 #pushd, popd
 #alias cd='pushd'
 #alias p='popd'
@@ -36,12 +45,16 @@ export PS1="\[\033[32m\]\u@\[\033[32m\]\h \[\033[34m\]\W\[\033[31m\]$(__git_ps1)
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
-export PGDATA=/usr/local/var/postgres/
 
 # Golang
-export GOROOT=/usr/local/opt/go/libexec
-export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+export GOROOT=/Users/s-akiho/.goenv/shims/
+export GOPATH=$HOME/go:$HOME/go-packages
+export PATH=$HOME/go/bin:$HOME/go-packages/bin:$GOROOT:$PATH
+
+# PostgreSQL
+export PATH=/Library/PostgreSQL/10/bin:$PATH
+#export PGDATA=/usr/local/var/postgres/
+export PGDATA=/Library/PostgreSQL/10/data
 
 ###-begin-ng-completion### 
 #
@@ -106,3 +119,4 @@ elif type compctl &>/dev/null; then
   compctl -K _ng_completion ng
 fi
 ###-end-ng-completion###
+eval "$(direnv hook bash)"
