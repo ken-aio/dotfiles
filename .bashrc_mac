@@ -120,3 +120,6 @@ elif type compctl &>/dev/null; then
 fi
 ###-end-ng-completion###
 eval "$(direnv hook bash)"
+
+# k8s
+source <(kubectl completion bash)

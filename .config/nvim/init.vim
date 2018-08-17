@@ -263,18 +263,10 @@ let g:neocomplete#enable_auto_delimiter = 1
 let g:neocomplete#auto_completion_start_length = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
-""" rails.vim
-""""""""""""""""""""""""""""""""""""""""""""""""""
-"autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.rb -default=controller()
-
-""""""""""""""""""""""""""""""""""""""""""""""""""
 """ unite.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " 入力モードで開始する
 let g:unite_enable_start_insert = 1
-
-" Ctrl + JはESCとする
-au FileType unite inoremap <silent> <buffer> <C-j> <ESC>
 
 " ESCキーで終了する
 au FileType unite nmap <silent> <buffer> <C-j> <Plug>(unite_exit)
@@ -386,17 +378,6 @@ nnoremap <silent> ,gg :<C-u>GitGutterToggle<CR>
 nnoremap <silent> ,gh :<C-u>GitGutterLineHighlightsToggle<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
-""" vim-monster
-""""""""""""""""""""""""""""""""""""""""""""""""""
-" Set async completion.
-let g:monster#completion#rcodetools#backend = "async_rct_complete"
-" With deoplete.nvim
-let g:monster#completion#rcodetools#backend = "async_rct_complete"
-let g:deoplete#sources#omni#input_patterns = {
-\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
-\}
-
-""""""""""""""""""""""""""""""""""""""""""""""""""
 """ QFixHowm
 """"""""""""""""""""""""""""""""""""""""""""""""""
 set runtimepath+=~/.cache/dein/repos/github.com/fuenor/qfixhowm
@@ -415,3 +396,19 @@ let howm_fileformat      = 'unix'
 set timeout timeoutlen=3000 ttimeoutlen=100
 " プレビューや絞り込みをQuickFix/ロケーションリストの両方で有効化(デフォルト:2)
 let QFixWin_EnableMode = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+""" toggle windows size https://qiita.com/grohiro/items/e3dbcc93510bc8c4c812
+""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:toggle_window_size = 0
+function! ToggleWindowSize()
+  if g:toggle_window_size == 1
+    exec "normal \<C-w>="
+    let g:toggle_window_size = 0
+  else
+    :resize
+    :vertical resize
+    let g:toggle_window_size = 1
+  endif
+endfunction
+nnoremap m :call ToggleWindowSize()<CR>
