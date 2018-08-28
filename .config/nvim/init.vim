@@ -309,6 +309,8 @@ let g:ale_sign_warning = '⚠'
 " Enable integration with airline.
 let g:airline#extensions#ale#enabled = 1
 
+let g:go_info_mode = 'guru'
+
 " Vim-Go shortcut settings
 "autocmd FileType go nmap gb :GoBuild<CR>
 " run :GoBuild or :GoTestCompile based on the go file
