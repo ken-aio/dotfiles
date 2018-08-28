@@ -196,26 +196,10 @@ nnoremap sO <C-w>=
 nnoremap sN :<C-u>bn<CR>
 nnoremap sP :<C-u>bp<CR>
 nnoremap st :<C-u>tabnew<CR>
-nnoremap sT :<C-u>Unite tab<CR>
 nnoremap ss :<C-u>sp<CR>
 nnoremap sv :<C-u>vs<CR>
 nnoremap sq :<C-u>q<CR>
 nnoremap sQ :<C-u>bd<CR>
-nnoremap sb :<C-u>Unite buffer_tab -buffer-name=file<CR>
-nnoremap sB :<C-u>Unite buffer -buffer-name=file<CR>
-" 分割しないでuniteのbufferを表示する
-nnoremap sbb :<C-u>Unite -no-split<CR>
-" 全部乗せ
-nnoremap saa :<C-u>UniteWithCurrentDir -no-split -buffer-name=files buffer file_mru bookmark file<CR>
-" ファイル一覧
-nnoremap sff  :<C-u>Unite -no-split -buffer-name=files file<CR>
-" 常用セット
-nnoremap suu  :<C-u>Unite -no-split buffer file_mru<CR>
-" 最近使用したファイル一覧
-nnoremap sm  :<C-u>Unite -no-split file_mru<CR>
-" 現在のバッファのカレントディレクトリからファイル一覧
-nnoremap sfa  :<C-u>UniteWithBufferDir -no-split file<CR>
-
 
 "-----------------------------------------
 " PHP settings
@@ -263,28 +247,9 @@ let g:neocomplete#enable_auto_delimiter = 1
 let g:neocomplete#auto_completion_start_length = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
-""" unite.vim
-""""""""""""""""""""""""""""""""""""""""""""""""""
-" 入力モードで開始する
-let g:unite_enable_start_insert = 1
-
-" ESCキーで終了する
-au FileType unite nmap <silent> <buffer> <C-j> <Plug>(unite_exit)
-au FileType unite nmap <silent> <buffer> <ESC> <Plug>(unite_exit)
-
-" Uniteに入る際はpasteモードをOFFにする
-au FileType unite set nopaste
-
-""""""""""""""""""""""""""""""""""""""""""""""""""
 """ NERDTree
 """"""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""
-""" Unite outline
-""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:unite_split_rule = 'botright'
-nnoremap <C-u> :Unite -vertical -no-quit -winwidth=40 outline<Esc>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """ vim-go
@@ -414,3 +379,94 @@ function! ToggleWindowSize()
   endif
 endfunction
 nnoremap m :call ToggleWindowSize()<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+""" denite https://rcmdnk.com/blog/2018/02/16/computer-vim/
+""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#tap('denite.nvim')
+  " Add custom menus
+  let s:menus = {}
+  let s:menus.file = {'description': 'File search (buffer, file, file_rec, file_mru'}
+  let s:menus.line = {'description': 'Line search (change, grep, line, tag'}
+  let s:menus.others = {'description': 'Others (command, command_history, help)'}
+  let s:menus.file.command_candidates = [
+        \ ['buffer', 'Denite buffer'],
+        \ ['file: Files in the current directory', 'Denite file'],
+        \ ['file_rec: Files, recursive list under the current directory', 'Denite file_rec'],
+        \ ['file_mru: Most recently used files', 'Denite file_mru']
+        \ ]
+  let s:menus.line.command_candidates = [
+        \ ['change', 'Denite change'],
+        \ ['grep :grep', 'Denite grep'],
+        \ ['line', 'Denite line'],
+        \ ['tag', 'Denite tag']
+        \ ]
+  let s:menus.others.command_candidates = [
+        \ ['command', 'Denite command'],
+        \ ['command_history', 'Denite command_history'],
+        \ ['help', 'Denite help']
+        \ ]
+
+  call denite#custom#var('menu', 'menus', s:menus)
+
+  nnoremap [denite] <Nop>
+  nmap f [denite]
+  nnoremap <silent> [denite]b :Denite buffer<CR>
+  nnoremap <silent> [denite]c :Denite changes<CR>
+  nnoremap <silent> [denite]f :Denite file<CR>
+  nnoremap <silent> [denite]g :Denite grep<CR>
+  nnoremap <silent> [denite]h :Denite help<CR>
+  nnoremap <silent> [denite]l :Denite line<CR>
+  nnoremap <silent> [denite]t :Denite tag<CR>
+  nnoremap <silent> [denite]m :Denite file_mru<CR>
+  nnoremap <silent> [denite]d :Denite menu<CR>
+
+  call denite#custom#map(
+        \ 'insert',
+        \ '<Down>',
+        \ '<denite:move_to_next_line>',
+        \ 'noremap'
+        \)
+  call denite#custom#map(
+        \ 'insert',
+        \ '<Up>',
+        \ '<denite:move_to_previous_line>',
+        \ 'noremap'
+        \)
+  call denite#custom#map(
+        \ 'insert',
+        \ '<C-N>',
+        \ '<denite:move_to_next_line>',
+        \ 'noremap'
+        \)
+  call denite#custom#map(
+        \ 'insert',
+        \ '<C-P>',
+        \ '<denite:move_to_previous_line>',
+        \ 'noremap'
+        \)
+  call denite#custom#map(
+        \ 'insert',
+        \ '<C-G>',
+        \ '<denite:assign_next_txt>',
+        \ 'noremap'
+        \)
+  call denite#custom#map(
+        \ 'insert',
+        \ '<C-T>',
+        \ '<denite:assign_previous_line>',
+        \ 'noremap'
+        \)
+  call denite#custom#map(
+        \ 'normal',
+        \ '/',
+        \ '<denite:enter_mode:insert>',
+        \ 'noremap'
+        \)
+  call denite#custom#map(
+        \ 'insert',
+        \ '<Esc>',
+        \ '<denite:enter_mode:normal>',
+        \ 'noremap'
+        \)
+endif

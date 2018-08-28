@@ -40,13 +40,6 @@ repo = 'tpope/vim-endwise'
 [[plugins]]
 repo = 'Townk/vim-autoclose'
 
-# unite
-[[plugins]]
-repo = 'Shougo/unite.vim'
-
-[[plugins]]
-repo = 'Shougo/unite-outline'
-
 [[plugins]]
 repo = 'Shougo/neomru.vim'
 
@@ -84,6 +77,10 @@ repo = 'fishbullet/deoplete-ruby'
 # memo tool
 [[plugins]]
 repo = 'fuenor/qfixhowm'
+
+# denite
+[[plugins]]
+repo = 'Shougo/denite.nvim'
 
 # view setting
 [[plugins]]
