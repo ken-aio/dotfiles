@@ -71,8 +71,8 @@ repo = 'Townk/vim-autoclose'
 [[plugins]]
 repo = 'astashov/vim-ruby-debugger'
 
-[[plugins]]
-repo = 'fishbullet/deoplete-ruby'
+#[[plugins]]
+#repo = 'fishbullet/deoplete-ruby'
 
 # memo tool
 [[plugins]]

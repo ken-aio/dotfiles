@@ -230,7 +230,9 @@ let g:syntastic_ruby_checkers = ['rubocop']
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """ deoplete
 """"""""""""""""""""""""""""""""""""""""""""""""""
-let g:deoplete#enable_at_startup = 1
+let g:python3_host_prog  = '/usr/local/bin/python3'
+let g:python3_host_skip_check = 1
+set completeopt+=noselect
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """ neosnippet
