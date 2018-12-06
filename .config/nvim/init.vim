@@ -143,6 +143,9 @@ set autowrite
 "clipboard共有
 set clipboard+=unnamedplus
 
+" :w] => :wに変換する
+cnoreabbrev w] w
+
 " Leaderを,に割り当て
 let mapleader = "@"
 " ,のデフォルトの機能は、\で使えるように退避
