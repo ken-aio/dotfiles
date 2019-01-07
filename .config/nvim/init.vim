@@ -297,7 +297,7 @@ autocmd FileType go nmap gb  :<C-u>call <SID>build_go_files()<CR>
 autocmd FileType go nmap gbb :GoTestFunc<CR>
 autocmd FileType go nmap gl  :GoLint<CR>
 autocmd FileType go nmap gr  :GoReferrers<CR>
-autocmd FileType go nmap gf  :GoIferr<CR>
+autocmd FileType go nmap gf  :GoIfErr<CR>
 autocmd FileType go nmap gh  :GoSameIds<CR>
 autocmd FileType go nmap gi  :GoInfo<CR>
 autocmd FileType go nmap gd  :GoDoc<CR>
