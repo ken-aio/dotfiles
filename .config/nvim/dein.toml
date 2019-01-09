@@ -40,13 +40,6 @@ repo = 'tpope/vim-endwise'
 [[plugins]]
 repo = 'Townk/vim-autoclose'
 
-# unite
-[[plugins]]
-repo = 'Shougo/unite.vim'
-
-[[plugins]]
-repo = 'Shougo/unite-outline'
-
 [[plugins]]
 repo = 'Shougo/neomru.vim'
 
@@ -78,12 +71,16 @@ repo = 'Townk/vim-autoclose'
 [[plugins]]
 repo = 'astashov/vim-ruby-debugger'
 
-[[plugins]]
-repo = 'fishbullet/deoplete-ruby'
+#[[plugins]]
+#repo = 'fishbullet/deoplete-ruby'
 
 # memo tool
 [[plugins]]
 repo = 'fuenor/qfixhowm'
+
+# denite
+[[plugins]]
+repo = 'Shougo/denite.nvim'
 
 # view setting
 [[plugins]]
@@ -106,6 +103,15 @@ if = "has('nvim')"
 hook_add = '''
 '''
 # ==========================================================
+# Golang
+# ==========================================================
+[[plugins]]
+repo = 'prabirshrestha/async.vim'
+
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+
+# ==========================================================
 # terminal
 # ==========================================================
 [[plugins]]
@@ -118,3 +124,20 @@ vnoremap <silent> ,rl :TREPLSendSelection<cr>
 nnoremap <silent> vt :Ttoggle<cr>
 nnoremap <silent> vs :terminal<cr>
 '''
+
+# Go settings
+[[plugins]]
+repo = 'fatih/vim-go'
+on_ft = 'go'
+
+[[plugins]]
+repo = 'SirVer/ultisnips'
+on_ft = 'go'
+
+[[plugins]]
+repo = 'zchee/vim-goiferr'
+if = "has('nvim')"
+on_ft = 'go'
+hook_add = '''
+'''
+

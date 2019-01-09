@@ -1,0 +1,8 @@
+NuGet/
+configstore/
+direnv/
+gocode/
+gtk-2.0/
+heroku/
+stetic/
+xbuild/

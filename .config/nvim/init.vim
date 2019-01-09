@@ -143,6 +143,9 @@ set autowrite
 "clipboard共有
 set clipboard+=unnamedplus
 
+" :w] => :wに変換する
+cnoreabbrev w] w
+
 " Leaderを,に割り当て
 let mapleader = "@"
 " ,のデフォルトの機能は、\で使えるように退避
@@ -196,26 +199,10 @@ nnoremap sO <C-w>=
 nnoremap sN :<C-u>bn<CR>
 nnoremap sP :<C-u>bp<CR>
 nnoremap st :<C-u>tabnew<CR>
-nnoremap sT :<C-u>Unite tab<CR>
 nnoremap ss :<C-u>sp<CR>
 nnoremap sv :<C-u>vs<CR>
 nnoremap sq :<C-u>q<CR>
 nnoremap sQ :<C-u>bd<CR>
-nnoremap sb :<C-u>Unite buffer_tab -buffer-name=file<CR>
-nnoremap sB :<C-u>Unite buffer -buffer-name=file<CR>
-" 分割しないでuniteのbufferを表示する
-nnoremap sbb :<C-u>Unite -no-split<CR>
-" 全部乗せ
-nnoremap saa :<C-u>UniteWithCurrentDir -no-split -buffer-name=files buffer file_mru bookmark file<CR>
-" ファイル一覧
-nnoremap sff  :<C-u>Unite -no-split -buffer-name=files file<CR>
-" 常用セット
-nnoremap suu  :<C-u>Unite -no-split buffer file_mru<CR>
-" 最近使用したファイル一覧
-nnoremap sm  :<C-u>Unite -no-split file_mru<CR>
-" 現在のバッファのカレントディレクトリからファイル一覧
-nnoremap sfa  :<C-u>UniteWithBufferDir -no-split file<CR>
-
 
 "-----------------------------------------
 " PHP settings
@@ -246,7 +233,9 @@ let g:syntastic_ruby_checkers = ['rubocop']
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """ deoplete
 """"""""""""""""""""""""""""""""""""""""""""""""""
-let g:deoplete#enable_at_startup = 1
+let g:python3_host_prog  = '/usr/local/bin/python3'
+let g:python3_host_skip_check = 1
+set completeopt+=noselect
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """ neosnippet
@@ -263,36 +252,9 @@ let g:neocomplete#enable_auto_delimiter = 1
 let g:neocomplete#auto_completion_start_length = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
-""" rails.vim
-""""""""""""""""""""""""""""""""""""""""""""""""""
-"autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.rb -default=controller()
-
-""""""""""""""""""""""""""""""""""""""""""""""""""
-""" unite.vim
-""""""""""""""""""""""""""""""""""""""""""""""""""
-" 入力モードで開始する
-let g:unite_enable_start_insert = 1
-
-" Ctrl + JはESCとする
-au FileType unite inoremap <silent> <buffer> <C-j> <ESC>
-
-" ESCキーで終了する
-au FileType unite nmap <silent> <buffer> <C-j> <Plug>(unite_exit)
-au FileType unite nmap <silent> <buffer> <ESC> <Plug>(unite_exit)
-
-" Uniteに入る際はpasteモードをOFFにする
-au FileType unite set nopaste
-
-""""""""""""""""""""""""""""""""""""""""""""""""""
 """ NERDTree
 """"""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""
-""" Unite outline
-""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:unite_split_rule = 'botright'
-nnoremap <C-u> :Unite -vertical -no-quit -winwidth=40 outline<Esc>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """ vim-go
@@ -317,6 +279,8 @@ let g:ale_sign_warning = '⚠'
 " Enable integration with airline.
 let g:airline#extensions#ale#enabled = 1
 
+let g:go_info_mode = 'guru'
+
 " Vim-Go shortcut settings
 "autocmd FileType go nmap gb :GoBuild<CR>
 " run :GoBuild or :GoTestCompile based on the go file
@@ -333,7 +297,7 @@ autocmd FileType go nmap gb  :<C-u>call <SID>build_go_files()<CR>
 autocmd FileType go nmap gbb :GoTestFunc<CR>
 autocmd FileType go nmap gl  :GoLint<CR>
 autocmd FileType go nmap gr  :GoReferrers<CR>
-autocmd FileType go nmap gf  :GoIferr<CR>
+autocmd FileType go nmap gf  :GoIfErr<CR>
 autocmd FileType go nmap gh  :GoSameIds<CR>
 autocmd FileType go nmap gi  :GoInfo<CR>
 autocmd FileType go nmap gd  :GoDoc<CR>
@@ -356,6 +320,21 @@ au FileType go nmap <Leader>e <Plug>(go-rename)
 " syntax highlight
 autocmd FileType go :highlight goErr cterm=bold ctermfg=214
 autocmd FileType go :match goErr /\<err\>/
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+""" go lsp : https://mattn.kaoriya.net/software/lang/go/20181217000056.htm
+""""""""""""""""""""""""""""""""""""""""""""""""""
+if executable('golsp')
+  augroup LspGo
+    au!
+    autocmd User lsp_setup call lsp#register_server({
+        \ 'name': 'go-lang',
+        \ 'cmd': {server_info->['golsp', '-mode', 'stdio']},
+        \ 'whitelist': ['go'],
+        \ })
+    autocmd FileType go setlocal omnifunc=lsp#complete
+  augroup END
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """ CtrlP Prefix: z
@@ -386,17 +365,6 @@ nnoremap <silent> ,gg :<C-u>GitGutterToggle<CR>
 nnoremap <silent> ,gh :<C-u>GitGutterLineHighlightsToggle<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
-""" vim-monster
-""""""""""""""""""""""""""""""""""""""""""""""""""
-" Set async completion.
-let g:monster#completion#rcodetools#backend = "async_rct_complete"
-" With deoplete.nvim
-let g:monster#completion#rcodetools#backend = "async_rct_complete"
-let g:deoplete#sources#omni#input_patterns = {
-\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
-\}
-
-""""""""""""""""""""""""""""""""""""""""""""""""""
 """ QFixHowm
 """"""""""""""""""""""""""""""""""""""""""""""""""
 set runtimepath+=~/.cache/dein/repos/github.com/fuenor/qfixhowm
@@ -415,3 +383,110 @@ let howm_fileformat      = 'unix'
 set timeout timeoutlen=3000 ttimeoutlen=100
 " プレビューや絞り込みをQuickFix/ロケーションリストの両方で有効化(デフォルト:2)
 let QFixWin_EnableMode = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+""" toggle windows size https://qiita.com/grohiro/items/e3dbcc93510bc8c4c812
+""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:toggle_window_size = 0
+function! ToggleWindowSize()
+  if g:toggle_window_size == 1
+    exec "normal \<C-w>="
+    let g:toggle_window_size = 0
+  else
+    :resize
+    :vertical resize
+    let g:toggle_window_size = 1
+  endif
+endfunction
+nnoremap m :call ToggleWindowSize()<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+""" denite https://rcmdnk.com/blog/2018/02/16/computer-vim/
+""""""""""""""""""""""""""""""""""""""""""""""""""
+if dein#tap('denite.nvim')
+  " Add custom menus
+  let s:menus = {}
+  let s:menus.file = {'description': 'File search (buffer, file, file_rec, file_mru'}
+  let s:menus.line = {'description': 'Line search (change, grep, line, tag'}
+  let s:menus.others = {'description': 'Others (command, command_history, help)'}
+  let s:menus.file.command_candidates = [
+        \ ['buffer', 'Denite buffer'],
+        \ ['file: Files in the current directory', 'Denite file'],
+        \ ['file_rec: Files, recursive list under the current directory', 'Denite file_rec'],
+        \ ['file_mru: Most recently used files', 'Denite file_mru']
+        \ ]
+  let s:menus.line.command_candidates = [
+        \ ['change', 'Denite change'],
+        \ ['grep :grep', 'Denite grep'],
+        \ ['line', 'Denite line'],
+        \ ['tag', 'Denite tag']
+        \ ]
+  let s:menus.others.command_candidates = [
+        \ ['command', 'Denite command'],
+        \ ['command_history', 'Denite command_history'],
+        \ ['help', 'Denite help']
+        \ ]
+
+  call denite#custom#var('menu', 'menus', s:menus)
+
+  nnoremap [denite] <Nop>
+  nmap f [denite]
+  nnoremap <silent> [denite]b :Denite buffer<CR>
+  nnoremap <silent> [denite]c :Denite changes<CR>
+  nnoremap <silent> [denite]f :Denite file<CR>
+  nnoremap <silent> [denite]g :Denite grep<CR>
+  nnoremap <silent> [denite]h :Denite help<CR>
+  nnoremap <silent> [denite]l :Denite line<CR>
+  nnoremap <silent> [denite]t :Denite tag<CR>
+  nnoremap <silent> [denite]m :Denite file_mru<CR>
+  nnoremap <silent> [denite]d :Denite menu<CR>
+
+  call denite#custom#map(
+        \ 'insert',
+        \ '<Down>',
+        \ '<denite:move_to_next_line>',
+        \ 'noremap'
+        \)
+  call denite#custom#map(
+        \ 'insert',
+        \ '<Up>',
+        \ '<denite:move_to_previous_line>',
+        \ 'noremap'
+        \)
+  call denite#custom#map(
+        \ 'insert',
+        \ '<C-N>',
+        \ '<denite:move_to_next_line>',
+        \ 'noremap'
+        \)
+  call denite#custom#map(
+        \ 'insert',
+        \ '<C-P>',
+        \ '<denite:move_to_previous_line>',
+        \ 'noremap'
+        \)
+  call denite#custom#map(
+        \ 'insert',
+        \ '<C-G>',
+        \ '<denite:assign_next_txt>',
+        \ 'noremap'
+        \)
+  call denite#custom#map(
+        \ 'insert',
+        \ '<C-T>',
+        \ '<denite:assign_previous_line>',
+        \ 'noremap'
+        \)
+  call denite#custom#map(
+        \ 'normal',
+        \ '/',
+        \ '<denite:enter_mode:insert>',
+        \ 'noremap'
+        \)
+  call denite#custom#map(
+        \ 'insert',
+        \ '<Esc>',
+        \ '<denite:enter_mode:normal>',
+        \ 'noremap'
+        \)
+endif

@@ -1,10 +1,11 @@
 [core]
-  editor = /usr/bin/vim
+  editor = /usr/local/bin/nvim
   compression = -1
   autocrlf = false
-  excludesfile = $HOME/.gitignore
+  excludesfile = /Users/s-akiho/.gitignore
 [user]
-  email = suguru.akiho@gmail.com
+  #email = suguru.akiho@gmail.com
+  email = s-akiho@unext.jp
   name = Suguru Akiho
 [color]
   ui = auto
@@ -15,15 +16,19 @@
   grep = auto
 [alias]
   alias = !git config --get-regexp '^alias\\.' | sed 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/' | sort
-  refresh= !git fetch origin && git remote prune origin
+  ref = !git fetch origin && git remote prune origin
   s = status
   ss = status -sb
 # show status after add (a)
   a  = !git add .  && git status
   ad = !git add .  && git status
   br = branch -a -v
-  brc = "!git branch -r --merged staging | grep -v -e staging -e develop -e alter* -e config -e master* | sed -e 's% *origin/%%' | xargs -I echo" # マージズミのブランチを確認
-  brd = "!git branch -r --merged staging | grep -v -e staging -e develop -e alter* -e config -e master* | sed -e 's% *origin/%%' | xargs -I% git push --delete origin %" # マージズミのブランチを削除する
+  brc = "!git branch -r --merged master | grep -v -e master -e develop -e alter* -e config -e master* | sed -e 's% *origin/%%' | xargs -I echo" # マージズミのブランチを確認
+  bc = "!git branch --merged master | grep -v -e master -e develop -e alter* -e config -e master* | sed -e 's% *origin/%%' | xargs -I echo" # マージズミのブランチを確認
+  brd = "!git branch -r --merged master | grep -v -e master -e develop -e alter* -e config -e master* | sed -e 's% *origin/%%' | xargs -I% git push --delete origin %" # マージズミのブランチを削除する
+  bd = "!git branch --merged master | grep -v -e master -e develop -e alter* -e config -e master* | xargs -I% git branch -d %" # マージズミのブランチを削除する
+  brc-cms = "!git branch -r --merged staging | grep -v -e staging -e develop -e alter* -e config -e master* | sed -e 's% *origin/%%' | xargs -I echo" # マージズミのブランチを確認
+  brd-cms = "!git branch -r --merged staging | grep -v -e staging -e develop -e alter* -e config -e master* | sed -e 's% *origin/%%' | xargs -I% git push --delete origin %" # マージズミのブランチを削除する
   ci = commit -a -m
   cie = commit --allow-empty -m
   co = checkout
@@ -39,6 +44,7 @@
 # rebase
   rbc = rebase --continue
   rba = rebase --abort
+  st = stash
 [push]
   default = simple
 [pull]
