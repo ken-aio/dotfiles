@@ -233,7 +233,7 @@ let g:syntastic_ruby_checkers = ['rubocop']
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """ deoplete
 """"""""""""""""""""""""""""""""""""""""""""""""""
-let g:python3_host_prog  = '/usr/local/bin/python3'
+let g:python3_host_prog = substitute(system('which python3'),"\n","","")
 let g:python3_host_skip_check = 1
 set completeopt+=noselect
 
@@ -259,6 +259,7 @@ nnoremap <silent><C-e> :NERDTreeToggle<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """ vim-go
 """"""""""""""""""""""""""""""""""""""""""""""""""
+let g:go_auto_type_info = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
