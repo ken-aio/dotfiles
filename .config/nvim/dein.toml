@@ -125,36 +125,6 @@ nnoremap <silent> vt :Ttoggle<cr>
 nnoremap <silent> vs :terminal<cr>
 '''
 
-
-
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-depends = 'context_filetype.vim'
-if = "has('nvim')"
-on_i = 1
-hook_source = '''
-source ~/.config/nvim/plugins/deoplete.rc.vim
-'''
-
-[[plugins]]
-repo = 'Shougo/neosnippet'
-hook_source = '''
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k> <Plug>(neosnippet_expand_target)
-  if has('conceal')
-    set conceallevel=2 concealcursor=niv
-  endif
-"inoremap <expr><BS> neocomplete#smart_close_popup()."<C-h>"
-"" エンターキーで補完候補の確定. スニペットの展開もエンターキーで確定・・・・・・②
-"imap <expr><CR> neosnippet#expandable() ? "<Plug>(neosnippet_expand)" : pumvisible() ? "<C-y>" : "<CR>"
-"" タブキーで補完候補の選択. スニペット内のジャンプもタブキーでジャンプ・・・・・・③
-"imap <expr><TAB> pumvisible() ? "<C-n>" : neosnippet#jumpable() ? "<Plug>(neosnippet_expand_or_jump)" : "<TAB>"
-let g:neosnippet#enable_snipmate_compatibility = 1
-'''
-on_i  = 1
-depends = ['neosnippet-snippets']
-
 # Go settings
 [[plugins]]
 repo = 'fatih/vim-go'
