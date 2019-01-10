@@ -259,7 +259,7 @@ nnoremap <silent><C-e> :NERDTreeToggle<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """ vim-go
 """"""""""""""""""""""""""""""""""""""""""""""""""
-let g:go_auto_type_info = 1
+"let g:go_snippet_engine = "neosnippet"
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
@@ -303,7 +303,7 @@ autocmd FileType go nmap gh  :GoSameIds<CR>
 autocmd FileType go nmap gi  :GoInfo<CR>
 autocmd FileType go nmap gd  :GoDoc<CR>
 autocmd FileType go nmap gc  :GoCoverageToggle<CR>
-autocmd FileType go nmap ga  :GoAlternate<CR>
+autocmd FileType go nmap ga  :GoAddTags<CR>
 autocmd FileType go nmap gn  :GoRename<CR>
 au FileType go nmap <Leader>r <Plug>(go-run)
 au FileType go nmap <Leader>b <Plug>(go-build)

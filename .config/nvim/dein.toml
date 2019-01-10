@@ -17,11 +17,6 @@ on_ft = 'toml'
 [[plugins]]
 repo = 'kana/vim-submode'
 
-# rubocop
-[[plugins]]
-repo = 'Shougo/neosnippet-snippets'
-on_ft = 'rb'
-
 # 静的解析
 [[plugins]]
 repo = 'scrooloose/syntastic'
