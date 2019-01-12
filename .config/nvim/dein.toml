@@ -66,8 +66,9 @@ repo = 'Townk/vim-autoclose'
 [[plugins]]
 repo = 'astashov/vim-ruby-debugger'
 
-#[[plugins]]
-#repo = 'fishbullet/deoplete-ruby'
+[[plugins]]
+repo = 'fishbullet/deoplete-ruby'
+on_ft = 'rb'
 
 # memo tool
 [[plugins]]
@@ -103,8 +104,8 @@ hook_add = '''
 [[plugins]]
 repo = 'prabirshrestha/async.vim'
 
-[[plugins]]
-repo = 'prabirshrestha/vim-lsp'
+#[[plugins]]
+#Repo = 'prabirshrestha/vim-lsp'
 
 # ==========================================================
 # terminal

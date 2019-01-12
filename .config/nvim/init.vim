@@ -325,17 +325,17 @@ autocmd FileType go :match goErr /\<err\>/
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """ go lsp : https://mattn.kaoriya.net/software/lang/go/20181217000056.htm
 """"""""""""""""""""""""""""""""""""""""""""""""""
-if executable('golsp')
-  augroup LspGo
-    au!
-    autocmd User lsp_setup call lsp#register_server({
-        \ 'name': 'go-lang',
-        \ 'cmd': {server_info->['golsp', '-mode', 'stdio']},
-        \ 'whitelist': ['go'],
-        \ })
-    autocmd FileType go setlocal omnifunc=lsp#complete
-  augroup END
-endif
+"if executable('golsp')
+"  augroup LspGo
+"    au!
+"    autocmd User lsp_setup call lsp#register_server({
+"        \ 'name': 'go-lang',
+"        \ 'cmd': {server_info->['golsp', '-mode', 'stdio']},
+"        \ 'whitelist': ['go'],
+"        \ })
+"    autocmd FileType go setlocal omnifunc=lsp#complete
+"  augroup END
+"endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """ CtrlP Prefix: z
