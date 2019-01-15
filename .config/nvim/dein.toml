@@ -28,6 +28,32 @@ repo = 'thinca/vim-ref'
 [[plugins]]
 repo = 'yuku-t/vim-ref-ri'
 
+# ==========================================================
+# ruby / rails
+# ==========================================================
+[[plugins]]
+repo = 'tpope/vim-rails'
+on_ft = 'rb'
+
+[[plugins]]
+repo = 'basyura/unite-rails'
+on_ft = 'rb'
+
+[[plugins]]
+repo = 'osyo-manga/vim-monster'
+on_ft = 'rb'
+
+[[plugins]]
+repo = 'astashov/vim-ruby-debugger'
+on_ft = 'rb'
+
+[[plugins]]
+repo = 'fishbullet/deoplete-ruby'
+on_ft = 'rb'
+
+# ==========================================================
+# Utils
+# ==========================================================
 # 自動で閉じる
 [[plugins]]
 repo = 'tpope/vim-endwise'
@@ -38,14 +64,6 @@ repo = 'Townk/vim-autoclose'
 [[plugins]]
 repo = 'Shougo/neomru.vim'
 
-# rails
-[[plugins]]
-repo = 'tpope/vim-rails'
-on_ft = 'rb'
-
-[[plugins]]
-repo = 'basyura/unite-rails'
-
 [[plugins]]
 repo = 'scrooloose/nerdtree'
 
@@ -54,21 +72,6 @@ repo = 'ctrlpvim/ctrlp.vim'
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
-
-# ruby
-[[plugins]]
-repo = 'osyo-manga/vim-monster'
-on_ft = 'rb'
-
-[[plugins]]
-repo = 'Townk/vim-autoclose'
-
-[[plugins]]
-repo = 'astashov/vim-ruby-debugger'
-
-[[plugins]]
-repo = 'fishbullet/deoplete-ruby'
-on_ft = 'rb'
 
 # memo tool
 [[plugins]]
@@ -93,11 +96,6 @@ hook_add = '''
 let g:airline_theme='luna'
 '''
 
-[[plugins]]
-repo = 'kassio/neoterm'
-if = "has('nvim')"
-hook_add = '''
-'''
 # ==========================================================
 # Golang
 # ==========================================================
@@ -106,6 +104,18 @@ repo = 'prabirshrestha/async.vim'
 
 #[[plugins]]
 #Repo = 'prabirshrestha/vim-lsp'
+
+# Go settings
+[[plugins]]
+repo = 'fatih/vim-go'
+on_ft = 'go'
+
+[[plugins]]
+repo = 'zchee/vim-goiferr'
+if = "has('nvim')"
+on_ft = 'go'
+hook_add = '''
+'''
 
 # ==========================================================
 # terminal
@@ -121,19 +131,19 @@ nnoremap <silent> vt :Ttoggle<cr>
 nnoremap <silent> vs :terminal<cr>
 '''
 
-# Go settings
+# ==========================================================
+# Markdown
+# ==========================================================
 [[plugins]]
-repo = 'fatih/vim-go'
-on_ft = 'go'
+repo = 'godlygeek/tabular'
+on_ft = 'md'
 
 [[plugins]]
-repo = 'SirVer/ultisnips'
-on_ft = 'go'
-
-[[plugins]]
-repo = 'zchee/vim-goiferr'
-if = "has('nvim')"
-on_ft = 'go'
+repo = 'plasticboy/vim-markdown'
+on_ft = 'md'
+depends = ['tabular']
 hook_add = '''
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_auto_insert_bullets = 0
+let g:vim_markdown_new_list_item_indent = 0
 '''
-
