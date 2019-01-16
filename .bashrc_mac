@@ -16,9 +16,12 @@ alias su='sudo bash --rcfile /var/root/.bashrc'
 alias ll='ls -l'
 alias lla='ls -la'
 alias l='ls -a'
+alias vim='nvim'
 alias be='bundle exec'
 alias vim='nvim'
 alias tailf='tail -f'
+alias gco="git branch -a --sort=-authordate | grep -v -e '->' -e '*' | perl -pe 's/^\h+//g' | perl -pe 's#^remotes/origin/###' | sort | uniq | peco | xargs git checkout"
+alias gcob="git branch -a --sort=-authordate | grep -v -e '->' -e '*' | perl -pe 's/^\h+//g' | perl -pe 's#^remotes/origin/###' | sort | uniq | peco | xargs git checkout -b"
 #pushd, popd
 #alias cd='pushd'
 #alias p='popd'
@@ -47,7 +50,7 @@ export PS1="\[\033[32m\]\u@\[\033[32m\]\h \[\033[34m\]\W\[\033[31m\]$(__git_ps1)
 export PATH="/usr/local/heroku/bin:$PATH"
 
 # Golang
-export GOROOT=/Users/s-akiho/.goenv/shims/
+export GOROOT=$HOME/.goenv/shims/
 export GOPATH=$HOME/go:$HOME/go-packages
 export PATH=$HOME/go/bin:$HOME/go-packages/bin:$GOROOT:$PATH
 
@@ -55,6 +58,9 @@ export PATH=$HOME/go/bin:$HOME/go-packages/bin:$GOROOT:$PATH
 export PATH=/Library/PostgreSQL/10/bin:$PATH
 #export PGDATA=/usr/local/var/postgres/
 export PGDATA=/Library/PostgreSQL/10/data
+
+# direnv
+eval "$(direnv hook bash)"
 
 ###-begin-ng-completion### 
 #
