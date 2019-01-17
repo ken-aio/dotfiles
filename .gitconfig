@@ -17,6 +17,7 @@
 [alias]
   alias = !git config --get-regexp '^alias\\.' | sed 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/' | sort
   ref = !git fetch origin && git remote prune origin
+  upd = "!git fetch origin && git remote prune origin | git branch | grep '*' | sed -e 's%* %origin/%' | xargs git merge --ff"
   s = status
   ss = status -sb
 # show status after add (a)
