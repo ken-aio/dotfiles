@@ -8,7 +8,7 @@ export CMS_PATH=~/git/work/CMS
 export XDG_CONFIG_HOME=~/.config
 
 # MacPorts Installer addition on 2013-08-21_at_23:34:01: adding an appropriate PATH variable for use with MacPorts.
-export PATH=/usr/local/bin:/opt/local/bin:/opt/local/sbin:/usr/local/opt/mysql\@5.6/bin:$PATH
+export PATH=/usr/local/bin:/opt/local/bin:/opt/local/sbin:/usr/local/opt/mysql\@5.7/bin:$PATH
 # Finished adapting your PATH environment variable for use with MacPorts.
 export PATH=$HOME/tools/platform-tools:$HOME/tools/android-sdk-macosx/tools:$HOME/.nodebrew/current/bin:$PATH
 
@@ -50,14 +50,16 @@ export PS1="\[\033[32m\]\u@\[\033[32m\]\h \[\033[34m\]\W\[\033[31m\]$(__git_ps1)
 export PATH="/usr/local/heroku/bin:$PATH"
 
 # Golang
+export GOENV_ROOT="$HOME/.goenv"
+export PATH="$GOENV_ROOT/bin:$PATH"
 export GOROOT=$HOME/.goenv/shims/
-export GOPATH=$HOME/go:$HOME/go-packages
-export PATH=$HOME/go/bin:$HOME/go-packages/bin:$GOROOT:$PATH
+export GOPATH=$HOME/go
+eval "$(goenv init -)"
+export PATH=$GOPATH/bin:$GOROOT:$PATH
 
 # PostgreSQL
-export PATH=/Library/PostgreSQL/10/bin:$PATH
-#export PGDATA=/usr/local/var/postgres/
-export PGDATA=/Library/PostgreSQL/10/data
+export PATH=/usr/local/Cellar/postgresql/11.1_1/bin:$PATH
+export PGDATA=/usr/local/var/postgres
 
 # direnv
 eval "$(direnv hook bash)"
@@ -126,3 +128,12 @@ elif type compctl &>/dev/null; then
 fi
 ###-end-ng-completion###
 eval "$(direnv hook bash)"
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
+# isucon
+export SLACK_WEBHOOK_URL="https://hooks.slack.com/services/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"
+
+# graalvm
+export GRAALVM_HOME=/Library/Java/JavaVirtualMachines/graalvm-ce-java8-19.3.0/Contents/Home
+

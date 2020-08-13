@@ -8,7 +8,7 @@ source ~/.config/nvim/plugins/deoplete.rc.vim
 '''
 
 [[plugins]]
-repo = 'zchee/deoplete-go'
+repo = 'deoplete-plugins/deoplete-go'
 on_ft = 'go'
 build = 'make'
 hook_source = '''

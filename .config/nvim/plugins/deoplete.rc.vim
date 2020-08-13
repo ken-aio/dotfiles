@@ -12,7 +12,3 @@ call deoplete#custom#source('_', 'converters', [
       \ 'converter_truncate_menu',
       \ 'converter_auto_delimiter',
 \ ])
-
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_camel_case = 1
-set completeopt+=noselect
