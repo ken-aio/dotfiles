@@ -73,10 +73,6 @@ repo = 'ctrlpvim/ctrlp.vim'
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
 
-# memo tool
-[[plugins]]
-repo = 'fuenor/qfixhowm'
-
 # denite
 [[plugins]]
 repo = 'Shougo/denite.nvim'
