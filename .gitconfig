@@ -27,7 +27,8 @@
   brc = "!git branch -r --merged master | grep -v -e master -e develop -e alter* -e config -e master* | sed -e 's% *origin/%%' | xargs -I echo" # マージズミのブランチを確認
   bc = "!git branch --merged master | grep -v -e master -e develop -e alter* -e config -e master* | sed -e 's% *origin/%%' | xargs -I echo" # マージズミのブランチを確認
   brd = "!git branch -r --merged master | grep -v -e master -e develop -e alter* -e config -e master* | sed -e 's% *origin/%%' | xargs -I% git push --delete origin %" # マージズミのブランチを削除する
-  bd = "!git branch --merged master | grep -v -e master -e develop -e alter* -e config -e master* | xargs -I% git branch -d %" # マージズミのブランチを削除する
+  bd = "!git branch --merged master | grep -v -e master -e develop* -e alter* -e config -e master* | xargs -I% git branch -d %" # マージズミのブランチを削除する
+  bdm = "!git branch --merged main | grep -v -e master -e develop* -e alter* -e config -e main* | xargs -I% git branch -d %" # マージズミのブランチを削除する
   brc-cms = "!git branch -r --merged staging | grep -v -e staging -e develop -e alter* -e config -e master* | sed -e 's% *origin/%%' | xargs -I echo" # マージズミのブランチを確認
   brd-cms = "!git branch -r --merged staging | grep -v -e staging -e develop -e alter* -e config -e master* | sed -e 's% *origin/%%' | xargs -I% git push --delete origin %" # マージズミのブランチを削除する
   ci = commit -a -m
