@@ -1,17 +1,57 @@
+# https://riq0h.jp/2021/09/15/084023/
 [[plugins]]
-repo = 'Shougo/deoplete.nvim'
-depends = 'context_filetype.vim'
-if = "has('nvim')"
-on_i = 1
-hook_source = '''
-source ~/.config/nvim/plugins/deoplete.rc.vim
+ repo = 'neovim/nvim-lspconfig'
+ on_event = 'BufEnter'
+ hook_source = '''
+ lua << EOF
+ local on_attach = require("plugins.configs.lspconfig").on_attach
+ local capabilities = require("plugins.configs.lspconfig").capabilities
+
+ local lspconfig = require("lspconfig")
+ local util = require "lspconfig/util"
+
+ lspconfig.gopls.setup {
+   on_attach = on_attach,
+   capabilities = capabilities,
+   cmd = {"gopls"},
+   filetypes = { "go", "gomod", "gowork", "gotmpl" },
+   root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+   settings = {
+     gopls = {
+       completeUnimported = true,
+       usePlaceholders = true,
+       analyses = {
+         unusedparams = true,
+       },
+     },
+   },
+ }
+
+local on_attach = function (client, bufnr)
+ local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+ local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+ local opts = { noremap=true, silent=true }
+ buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+ buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+ buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+ buf_set_keymap('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+ buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+ buf_set_keymap('n', 'gx', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+ buf_set_keymap('n', 'g[', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+ buf_set_keymap('n', 'g]', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+end
+
+ local lsp_installer = require("nvim-lsp-installer")
+ lsp_installer.on_server_ready(function(server)
+   local opts = {}
+   opts.on_attach = on_attach
+   server:setup(opts)
+   vim.cmd [[ do User LspAttachBuffers ]]
+ end)
+EOF
 '''
 
-#[[plugins]]
-#repo = 'deoplete-plugins/deoplete-go'
-#on_ft = 'go'
-#build = 'make'
-#hook_source = '''
-#let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-#let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-#'''
+[[plugins]]
+ repo ='williamboman/nvim-lsp-installer'
+ on_source = 'nvim-lspconfig'

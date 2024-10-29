@@ -23,8 +23,31 @@ let s:toml_lazy_file = fnamemodify(expand('<sfile>'), ':h').'/dein_lazy.toml'
 
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
+
+  cal dein#add('neovim/nvim-lspconfig')
+
+  call dein#add('Shougo/ddc.vim')
+  call dein#add('vim-denops/denops.vim')
+  call dein#add('Shougo/ddc-ui-native')
+
+  call dein#add('Shougo/ddc-source-around')
+  call dein#add('Shougo/ddc-matcher_head')
+  call dein#add('Shougo/ddc-sorter_rank')
+  call dein#add('Shougo/ddc-converter_remove_overlap')
+  " ポップアップウィンドウを表示するプラグイン
+  call dein#add('Shougo/pum.vim')
+  call dein#add('Shougo/ddc-nvim-lsp')
+
+  " telescope
+  call dein#add('nvim-lua/plenary.nvim')
+  call dein#add('nvim-telescope/telescope.nvim', { 'rev': '0.1.6' })
+
+  " NERDTREE
+  call dein#add('preservim/nerdtree')
+
   call dein#load_toml(s:toml_file,      {'lazy': 0})
   call dein#load_toml(s:toml_lazy_file, {'lazy': 1})
+
   call dein#end()
   call dein#save_state()
 endif
@@ -222,22 +245,9 @@ call submode#map('bufmove', 'n', '', '+', '<C-w>+')
 call submode#map('bufmove', 'n', '', '-', '<C-w>-')
 
 " neovim terminal mode
-tnoremap <silent> <ESC> <C-\><C-n>
-
-"-----------------------------------------
-"Vim Rubocop
-"-----------------------------------------
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby'] }
-let g:syntastic_ruby_checkers = ['rubocop']
-
-""""""""""""""""""""""""""""""""""""""""""""""""""
-""" deoplete
-""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:python3_host_prog = substitute(system('which python3'),"\n","","")
-let g:python3_host_skip_check = 1
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_camel_case = 1
-set completeopt+=noselect
+tnoremap <C-[> <ESC> <C-\><C-n>
+command! -nargs=* T split | wincmd j | resize 20 | terminal <args>
+autocmd TermOpen * startinsert
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """ neosnippet
@@ -257,6 +267,11 @@ let g:neocomplete#auto_completion_start_length = 1
 """ NERDTree
 """"""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
+let g:NERDTreeWinSize=25
+" Start NERDTree. If a file is specified, move the cursor to its window.
+autocmd StdinReadPre * let s:std_in=1
+" vim起動時にNERDTreeを開く
+"autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """ vim-go
@@ -325,67 +340,19 @@ autocmd FileType go :highlight goErr cterm=bold ctermfg=214
 autocmd FileType go :match goErr /\<err\>/
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
-""" go lsp : https://mattn.kaoriya.net/software/lang/go/20181217000056.htm
+""" Telescope
 """"""""""""""""""""""""""""""""""""""""""""""""""
-"if executable('golsp')
-"  augroup LspGo
-"    au!
-"    autocmd User lsp_setup call lsp#register_server({
-"        \ 'name': 'go-lang',
-"        \ 'cmd': {server_info->['golsp', '-mode', 'stdio']},
-"        \ 'whitelist': ['go'],
-"        \ })
-"    autocmd FileType go setlocal omnifunc=lsp#complete
-"  augroup END
-"endif
-
-""""""""""""""""""""""""""""""""""""""""""""""""""
-""" CtrlP Prefix: z
-""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap z <Nop>
-nnoremap za :<C-u>CtrlP<Space>
-nnoremap zb :<C-u>CtrlPBuffer<CR>
-nnoremap zd :<C-u>CtrlPDir<CR>
-nnoremap zf :<C-u>CtrlP<CR>
-nnoremap zl :<C-u>CtrlPLine<CR>
-nnoremap zm :<C-u>CtrlPMRUFiles<CR>
-nnoremap zq :<C-u>CtrlPQuickfix<CR>
-nnoremap zs :<C-u>CtrlPMixed<CR>
-nnoremap zt :<C-u>CtrlPTag<CR>
-
-let g:ctrlp_map = '<Nop>'
-" Guess vcs root dir
-let g:ctrlp_working_path_mode = 'ra'
-" Open new file in current window
-let g:ctrlp_open_new_file = 'r'
-let g:ctrlp_extensions = ['tag', 'quickfix', 'dir', 'line', 'mixed']
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:18'
+" Find files using Telescope command-line sugar.
+nnoremap ff <cmd>Telescope find_files<cr>
+nnoremap fg <cmd>Telescope live_grep<cr>
+nnoremap fb <cmd>Telescope buffers<cr>
+nnoremap fh <cmd>Telescope help_tags<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """ gitgutter Prefix: ,
 """"""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <silent> ,gg :<C-u>GitGutterToggle<CR>
 nnoremap <silent> ,gh :<C-u>GitGutterLineHighlightsToggle<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""
-""" QFixHowm
-""""""""""""""""""""""""""""""""""""""""""""""""""
-set runtimepath+=~/.cache/dein/repos/github.com/fuenor/qfixhowm
-
-" キーマップリーダー
-let QFixHowm_MenuKey = 0
-let QFixHowm_Key = 'g'
-
-" howm_dirはファイルを保存したいディレクトリを設定
-let howm_dir             = '~/howm'
-let howm_filename        = '%Y/%m/%Y-%m-%d-%H%M%S.txt'
-let howm_fileencoding    = 'utf-8'
-
-let howm_fileformat      = 'unix'
-" キーコードやマッピングされたキー列が完了するのを待つ時間(ミリ秒)
-set timeout timeoutlen=3000 ttimeoutlen=100
-" プレビューや絞り込みをQuickFix/ロケーションリストの両方で有効化(デフォルト:2)
-let QFixWin_EnableMode = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """ toggle windows size https://qiita.com/grohiro/items/e3dbcc93510bc8c4c812
@@ -404,92 +371,56 @@ endfunction
 nnoremap m :call ToggleWindowSize()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
-""" denite https://rcmdnk.com/blog/2018/02/16/computer-vim/
+""" ddc.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""
-if dein#tap('denite.nvim')
-  " Add custom menus
-  let s:menus = {}
-  let s:menus.file = {'description': 'File search (buffer, file, file_rec, file_mru'}
-  let s:menus.line = {'description': 'Line search (change, grep, line, tag'}
-  let s:menus.others = {'description': 'Others (command, command_history, help)'}
-  let s:menus.file.command_candidates = [
-        \ ['buffer', 'Denite buffer'],
-        \ ['file: Files in the current directory', 'Denite file'],
-        \ ['file_rec: Files, recursive list under the current directory', 'Denite file_rec'],
-        \ ['file_mru: Most recently used files', 'Denite file_mru']
-        \ ]
-  let s:menus.line.command_candidates = [
-        \ ['change', 'Denite change'],
-        \ ['grep :grep', 'Denite grep'],
-        \ ['line', 'Denite line'],
-        \ ['tag', 'Denite tag']
-        \ ]
-  let s:menus.others.command_candidates = [
-        \ ['command', 'Denite command'],
-        \ ['command_history', 'Denite command_history'],
-        \ ['help', 'Denite help']
-        \ ]
+" Customize global settings
 
-  call denite#custom#var('menu', 'menus', s:menus)
+" You must set the default ui.
+" NOTE: native ui
+" https://github.com/Shougo/ddc-ui-native
+call ddc#custom#patch_global('ui', 'native')
 
-  nnoremap [denite] <Nop>
-  nmap f [denite]
-  nnoremap <silent> [denite]b :Denite buffer<CR>
-  nnoremap <silent> [denite]c :Denite changes<CR>
-  nnoremap <silent> [denite]f :Denite file<CR>
-  nnoremap <silent> [denite]g :Denite grep<CR>
-  nnoremap <silent> [denite]h :Denite help<CR>
-  nnoremap <silent> [denite]l :Denite line<CR>
-  nnoremap <silent> [denite]t :Denite tag<CR>
-  nnoremap <silent> [denite]m :Denite file_mru<CR>
-  nnoremap <silent> [denite]d :Denite menu<CR>
+" Use around source.
+" https://github.com/Shougo/ddc-source-around
+call ddc#custom#patch_global('sources', ['around'])
 
-  call denite#custom#map(
-        \ 'insert',
-        \ '<Down>',
-        \ '<denite:move_to_next_line>',
-        \ 'noremap'
-        \)
-  call denite#custom#map(
-        \ 'insert',
-        \ '<Up>',
-        \ '<denite:move_to_previous_line>',
-        \ 'noremap'
-        \)
-  call denite#custom#map(
-        \ 'insert',
-        \ '<C-N>',
-        \ '<denite:move_to_next_line>',
-        \ 'noremap'
-        \)
-  call denite#custom#map(
-        \ 'insert',
-        \ '<C-P>',
-        \ '<denite:move_to_previous_line>',
-        \ 'noremap'
-        \)
-  call denite#custom#map(
-        \ 'insert',
-        \ '<C-G>',
-        \ '<denite:assign_next_txt>',
-        \ 'noremap'
-        \)
-  call denite#custom#map(
-        \ 'insert',
-        \ '<C-T>',
-        \ '<denite:assign_previous_line>',
-        \ 'noremap'
-        \)
-  call denite#custom#map(
-        \ 'normal',
-        \ '/',
-        \ '<denite:enter_mode:insert>',
-        \ 'noremap'
-        \)
-  call denite#custom#map(
-        \ 'insert',
-        \ '<Esc>',
-        \ '<denite:enter_mode:normal>',
-        \ 'noremap'
-        \)
-endif
+" Use matcher_head and sorter_rank.
+" https://github.com/Shougo/ddc-matcher_head
+" https://github.com/Shougo/ddc-sorter_rank
+call ddc#custom#patch_global('sourceOptions', #{
+      \ _: #{
+      \   matchers: ['matcher_head'],
+      \   sorters: ['sorter_rank']},
+      \ })
+
+" Change source options
+call ddc#custom#patch_global('sourceOptions', #{
+      \   around: #{ mark: 'A' },
+      \ })
+call ddc#custom#patch_global('sourceParams', #{
+      \   around: #{ maxSize: 500 },
+      \ })
+
+" Customize settings on a filetype
+call ddc#custom#patch_filetype(['c', 'cpp'], 'sources',
+      \ ['around', 'clangd'])
+call ddc#custom#patch_filetype(['c', 'cpp'], 'sourceOptions', #{
+      \   clangd: #{ mark: 'C' },
+      \ })
+call ddc#custom#patch_filetype('markdown', 'sourceParams', #{
+      \   around: #{ maxSize: 100 },
+      \ })
+
+" Mappings
+
+" <TAB>: completion.
+inoremap <silent><expr> <TAB>
+\ pumvisible() ? '<C-n>' :
+\ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+\ '<TAB>' : ddc#map#manual_complete()
+
+" <S-TAB>: completion back.
+inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
+
+" Use ddc.
+call ddc#enable()

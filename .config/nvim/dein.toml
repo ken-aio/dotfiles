@@ -29,29 +29,6 @@ repo = 'thinca/vim-ref'
 repo = 'yuku-t/vim-ref-ri'
 
 # ==========================================================
-# ruby / rails
-# ==========================================================
-[[plugins]]
-repo = 'tpope/vim-rails'
-on_ft = 'rb'
-
-[[plugins]]
-repo = 'basyura/unite-rails'
-on_ft = 'rb'
-
-[[plugins]]
-repo = 'osyo-manga/vim-monster'
-on_ft = 'rb'
-
-[[plugins]]
-repo = 'astashov/vim-ruby-debugger'
-on_ft = 'rb'
-
-[[plugins]]
-repo = 'fishbullet/deoplete-ruby'
-on_ft = 'rb'
-
-# ==========================================================
 # Utils
 # ==========================================================
 # 自動で閉じる
@@ -64,18 +41,11 @@ repo = 'Townk/vim-autoclose'
 [[plugins]]
 repo = 'Shougo/neomru.vim'
 
-[[plugins]]
-repo = 'scrooloose/nerdtree'
-
-[[plugins]]
-repo = 'ctrlpvim/ctrlp.vim'
+#[[plugins]]
+#repo = 'ctrlpvim/ctrlp.vim'
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
-
-# denite
-[[plugins]]
-repo = 'Shougo/denite.nvim'
 
 # view setting
 [[plugins]]
@@ -101,9 +71,6 @@ repo = 'tpope/vim-fugitive'
 # ==========================================================
 [[plugins]]
 repo = 'prabirshrestha/async.vim'
-
-#[[plugins]]
-#Repo = 'prabirshrestha/vim-lsp'
 
 # Go settings
 [[plugins]]
@@ -169,19 +136,6 @@ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-" SuperTab like snippets behavior.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <expr><TAB>
- \ pumvisible() ? "\<C-n>" :
- \ neosnippet#expandable_or_jumpable() ?
- \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-" For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
 " Set the path to our snippets
 let g:neosnippet#snippets_directory='~/.config/nvim/snippets'
 '''
