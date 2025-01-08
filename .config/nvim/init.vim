@@ -24,7 +24,8 @@ let s:toml_lazy_file = fnamemodify(expand('<sfile>'), ':h').'/dein_lazy.toml'
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
 
-  cal dein#add('neovim/nvim-lspconfig')
+  call dein#add('neovim/nvim-lspconfig')
+  call dein#add('nametake/golangci-lint-langserver')
 
   call dein#add('Shougo/ddc.vim')
   call dein#add('vim-denops/denops.vim')
@@ -289,6 +290,7 @@ let g:go_highlight_generate_tags = 1
 let g:go_highlight_fields = 1
 " GoMetaLinter
 let g:go_metalinter_autosave = 1
+let g:go_metalinter_command = "golangci-lint"
 
 let g:go_fmt_command = "goimports"
 " Error and warning signs.

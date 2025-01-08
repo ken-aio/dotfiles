@@ -1,3 +1,6 @@
+# ==========================================================
+# lsp-config
+# ==========================================================
 # https://riq0h.jp/2021/09/15/084023/
 [[plugins]]
  repo = 'neovim/nvim-lspconfig'
@@ -8,7 +11,23 @@
  local capabilities = require("plugins.configs.lspconfig").capabilities
 
  local lspconfig = require("lspconfig")
+ local configs = require 'lspconfig/configs'
  local util = require "lspconfig/util"
+
+ if not configs.golangcilsp then
+   configs.golangcilsp = {
+     default_config = {
+       cmd = {'golangci-lint-langserver'},
+       root_dir = lspconfig.util.root_pattern('.git', 'go.mod'),
+       init_options = {
+         command = { "golangci-lint", "run", "--enable-all", "--disable", "lll", "--out-format", "json", "--issues-exit-code=1" };
+       }
+     };
+   }
+ end
+ lspconfig.golangci_lint_ls.setup {
+ 	filetypes = {'go','gomod'}
+ }
 
  lspconfig.gopls.setup {
    on_attach = on_attach,
@@ -51,7 +70,3 @@ end
  end)
 EOF
 '''
-
-[[plugins]]
- repo ='williamboman/nvim-lsp-installer'
- on_source = 'nvim-lspconfig'
