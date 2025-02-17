@@ -458,3 +458,8 @@ local on_attach = function (client, bufnr)
    end
  }
 EOF
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+""" Copilot
+""""""""""""""""""""""""""""""""""""""""""""""""""
+:lua require('copilot_chat_config.init')
