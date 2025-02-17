@@ -67,6 +67,18 @@ let g:airline_theme='luna'
 repo = 'tpope/vim-fugitive'
 
 # ==========================================================
+# LSP
+# ==========================================================
+[[plugins]]
+ repo = 'neovim/nvim-lspconfig'
+
+[[plugins]]
+ repo = 'williamboman/mason.nvim'
+
+[[plugins]]
+ repo = 'williamboman/mason-lspconfig.nvim'
+
+# ==========================================================
 # Golang
 # ==========================================================
 [[plugins]]
@@ -141,3 +153,10 @@ let g:neosnippet#snippets_directory='~/.config/nvim/snippets'
 '''
 on_i  = 1
 depends = ['neosnippet-snippets']
+
+# ==========================================================
+# Github Copilot Chat
+# ==========================================================
+[[plugins]]
+repo = 'CopilotC-Nvim/CopilotChat.nvim'
+depends = ['github/copilot.vim', 'nvim-lua/plenary.nvim']
