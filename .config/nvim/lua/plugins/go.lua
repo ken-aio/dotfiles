@@ -91,6 +91,16 @@ return {
         end
       })
 
+      -- 自動保存時のGoImport実行
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        pattern = "*.go",
+        callback = function()
+          -- GoImportコマンドを実行
+          vim.cmd("GoImport")
+        end,
+        desc = "Auto run GoImport on save"
+      })
+
       -- キーマッピング
       local opts = { noremap = true, silent = true }
       -- 基本的な機能
