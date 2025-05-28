@@ -120,6 +120,30 @@ return {
       vim.keymap.set('n', '<leader>gl', '<cmd>GoLint<CR>', opts)
       vim.keymap.set('n', '<leader>ga', '<cmd>GoAlt<CR>', opts)
       vim.keymap.set('n', '<leader>gm', '<cmd>GoModTidy<CR>', opts)
+
+      -- Golang専用の自動括弧閉じ設定
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "go",
+        callback = function()
+          local opts_insert = { noremap = true, silent = true, buffer = true }
+          
+          -- 関数定義時の自動括弧閉じ強化
+          vim.keymap.set('i', 'func(', 'func()<Left>', opts_insert)
+          
+          -- if文の自動括弧閉じ
+          vim.keymap.set('i', 'if ', 'if  {<CR>}<Up><End><Left><Left>', opts_insert)
+          
+          -- for文の自動括弧閉じ
+          vim.keymap.set('i', 'for ', 'for  {<CR>}<Up><End><Left><Left>', opts_insert)
+          
+          -- switch文の自動括弧閉じ
+          vim.keymap.set('i', 'switch ', 'switch  {<CR>}<Up><End><Left><Left>', opts_insert)
+          
+          -- エラーハンドリングの自動補完
+          vim.keymap.set('i', 'iferr', 'if err != nil {<CR>return err<CR>}', opts_insert)
+        end,
+        desc = "Go-specific autopairs and snippets"
+      })
     end,
   },
 

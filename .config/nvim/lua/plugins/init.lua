@@ -146,4 +146,77 @@ return {
       vim.g.NERDTreeWinSize = 25
     end
   },
+
+  -- 自動括弧閉じプラグイン
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = function()
+      local autopairs = require("nvim-autopairs")
+      local Rule = require("nvim-autopairs.rule")
+      local cond = require("nvim-autopairs.conds")
+
+      -- 基本設定
+      autopairs.setup({
+        check_ts = true,
+        ts_config = {
+          lua = {"string", "source"},
+          javascript = {"string", "template_string"},
+          java = false,
+        },
+        disable_filetype = { "TelescopePrompt", "spectre_panel" },
+        disable_in_macro = false,
+        disable_in_visualblock = false,
+        disable_in_replace_mode = true,
+        ignored_next_char = [=[[%w%%%'%[%"%.%`%$]]=],
+        enable_moveright = true,
+        enable_afterquote = true,
+        enable_check_bracket_line = true,
+        enable_bracket_in_quote = true,
+        enable_abbr = false,
+        break_undo = true,
+        check_comma = true,
+        map_cr = true,
+        map_bs = true,
+        map_c_h = false,
+        map_c_w = false,
+      })
+
+      -- Golang専用の設定
+      autopairs.add_rules({
+        -- Golang構造体初期化の自動ペア
+        Rule("&", "", "go"):with_pair(function(opts)
+          local line = opts.line
+          local col = opts.col
+          -- 構造体名の後の&{}パターンを検出
+          if line:sub(col-10, col):match("%w+%s*{$") then
+            return true
+          end
+          return false
+        end):with_move(cond.none()),
+
+        -- Goのスライス・配列の自動ペア強化
+        Rule("[", "]", "go"),
+        
+        -- Goの関数リテラル用の{}ペア
+        Rule("{", "}", "go"):with_pair(function(opts)
+          local line = opts.line
+          local col = opts.col
+          -- func()の後の{}を検出
+          if line:sub(col-6, col):match("func%(%s*%)%s*$") then
+            return true
+          end
+          return true
+        end),
+      })
+
+      -- nvim-cmpとの統合
+      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+      local cmp = require("cmp")
+      cmp.event:on(
+        "confirm_done",
+        cmp_autopairs.on_confirm_done()
+      )
+    end,
+  },
 }
