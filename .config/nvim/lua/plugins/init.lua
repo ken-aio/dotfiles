@@ -28,11 +28,24 @@ return {
     },
     config = function()
       local cmp = require("cmp")
+      
+      -- Copilot用のハイライト設定
+      vim.api.nvim_set_hl(0, "CmpItemKindCopilot", {fg ="#6CC644"})
+      
       cmp.setup({
         snippet = {
           expand = function(args)
             vim.fn["vsnip#anonymous"](args.body)
           end,
+        },
+        formatting = {
+          format = function(entry, vim_item)
+            if entry.source.name == "copilot" then
+              vim_item.kind = " Copilot"
+              vim_item.kind_hl_group = "CmpItemKindCopilot"
+            end
+            return vim_item
+          end
         },
         window = {
           completion = cmp.config.window.bordered(),
@@ -45,7 +58,11 @@ return {
           ['<C-e>'] = cmp.mapping.abort(),
           ['<CR>'] = cmp.mapping.confirm({ select = true }),
           ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
+            -- Copilotの提案がある場合は、Copilotの提案を優先
+            local copilot_suggestion = require("copilot.suggestion")
+            if copilot_suggestion.is_visible() then
+              copilot_suggestion.accept()
+            elseif cmp.visible() then
               cmp.select_next_item()
             else
               fallback()
@@ -60,8 +77,10 @@ return {
           end, { 'i', 's' }),
         }),
         sources = cmp.config.sources({
-          { name = 'nvim_lsp' },
-          { name = 'vsnip' },
+          { name = 'copilot', group_index = 2 },
+          { name = 'nvim_lsp', group_index = 2 },
+          { name = 'vsnip', group_index = 2 },
+        }, {
           { name = 'buffer' },
           { name = 'path' },
         })
